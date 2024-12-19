@@ -1,9 +1,9 @@
-import pkg from "aws-sdk";
-const { S3 } = pkg;
+import { S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 
 export class S3Service {
   constructor() {
-    this.s3 = new S3({
+    this.S3Client = new S3Client({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_KEY,
     });
@@ -15,7 +15,7 @@ export class S3Service {
       Key: file.name,
       Body: file.data,
     };
-    const upload = await this.s3.upload(params).promise();
+    const upload = await this.s3.upload(params)
 
     return upload;
   }
